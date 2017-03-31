@@ -1,14 +1,14 @@
 <template>
 <div id="commonHeader">
     <section>
-        <img src="../assets/images/home/02.png">
+        <img src="../../static/images/home/02.png">
         <span>扫一扫</span>
     </section>
     <section>
         <p>黄平路附近</p>
     </section>
     <section>
-        <img src="../assets/images/home/01.png">
+        <img src="../../static/images/home/01.png">
         <span>搜索</span>
     </section>
 </div>
@@ -43,7 +43,7 @@
         }
         &:nth-of-type(2){
             line-height: 1.43rem;
-            background:url('../assets/images/home/03.png') no-repeat right center;
+            background:url('../../static/images/home/03.png') no-repeat right center;
             background-size: .27rem .25rem;
             padding-right:.27rem;
             font-size:.4rem;

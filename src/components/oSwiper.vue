@@ -1,11 +1,13 @@
 <template>
     <div id="oSwiper">
         <div class="swiper-container">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="item in imgArr"><img :src="item.activity.img"></div>
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" v-for="item in imgArr">
+                    <img :src="item.activity.img">
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
         </div>
-        <div class="swiper-pagination"></div>
-    </div>
     </div>
 </template>
 
@@ -42,38 +44,27 @@ import Swiper from '../../lib/swiper'
             // window.onload = function(){
             //     self.loadSwiper();
             // }
-            // window.onload = function(){
-            //     self.loadData();
-            // }
 
         },
         mounted(){
             this.loadData();
-            this.loadSwiper();
+            // 注意这里不要写this.loadSwiper();
+            // 不然会出现滑动图片过不去或者过去有bug的情况
         },
         updated(){
             this.loadSwiper();
-        },
-        destroyed(){
-
         }
     }
 </script>
 
-<style lang="less">
+<style lang="less" scoped="true">
+@import url('../../lib/swiper-3.3.1.min.css');
 #oSwiper{
-    width:100%;
-    height: 6.67rem;
+    border-bottom: .32rem solid #efefef;
     .swiper-container{
-        width:100%;
         height: 3.72rem;
-        .swiper-slide{
-            with:100%;
-            height: 3.72rem;
-            img{
-                with:100%;
-                height: 3.72rem;
-            }
+        .swiper-slide img {
+            width: 100%;
         }
     }
 }

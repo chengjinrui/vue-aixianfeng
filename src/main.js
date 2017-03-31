@@ -8,7 +8,6 @@ import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import FlexibleJs from '../lib/flexible'
 
-
 Vue.use(VueRouter)
 Vue.use(VueResource)
 Vue.config.productionTip = false
