@@ -30,8 +30,19 @@
 
 >5.闪送超市全部
 
-    - 如何获得服务器中的数据 然后判断有无 有的话就显示到页面
+    - 如何获得服务器中的数据 然后判断有无(是否是空) 有的话就显示到页面 没有就不显示
     - map和forEach的区别 用法都是一样的 但是map可以修改数组中的值然后再返回回去
     - 左边和右边的高度把握有问题
     - boostrap 框架怎么引入
     - 页面结构需要采用来自服务器的数据 删掉重复的结构的时候注意一定要留一个自己原先写的 切记 上线的时候再清掉
+    - 闪送超市的加减号有问题
+>6. 看看购物车能写多少
+
+>7. boostrap 最low的改法 融合vue
+
+npm install boostrap
+然后查看下载下来的bootstrap包里面的font文件的位置
+然后去找bootstrap的css ctrl+f 查找url 有五个url和font有关 把之前的路径改到这里面来 就ok了
+<!-- 最后在main.js 里面 import '这里写bootstrap.css的路径' -->
+之前写的引入方法有问题 bootstrap有他定义的样式 在main.js引入之后 会影响我的页面 解决办法在当前组件的script标签下面
+直接写import '../../../lib/bootstrap.css'

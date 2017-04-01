@@ -61,9 +61,13 @@ import Market_showGood from '../../components/market_showGood'
                 this.$http.get('/static/data/market.json').then((res)=>{
                     // console.log(res.body);
                     this.allGoodsArr = res.body.products;
-                    // console.log(this.allGoodsArr);
+
                     // 在这里初始化一下currentGoodsArr的值 默认是热销榜 104749是热销榜的id
-                    this.currentGoodsArr = this.allGoodsArr[104749]
+                    let currentGoodsArr = this.allGoodsArr[104749];
+                    this.currentGoodsArr = currentGoodsArr.map(function(item){
+                        item.flag_shouldShow = false;
+                        return item;
+                    })
                 })
             },
             changeFlagSelected(item){
@@ -72,7 +76,12 @@ import Market_showGood from '../../components/market_showGood'
                 })
                 item.flag_selected = !item.flag_selected;
                 // console.log(item.id);
-                this.currentGoodsArr = this.allGoodsArr[item.id];
+                //
+                let currentGoodsArr = this.allGoodsArr[item.id];
+                this.currentGoodsArr = currentGoodsArr.map(function(item){
+                    item.flag_shouldShow = false;
+                    return item;
+                })
                 // console.log(this.currentGoodsArr);
             }
         },

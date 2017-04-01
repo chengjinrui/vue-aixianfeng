@@ -7,6 +7,9 @@ import LessLoader from 'less-loader'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import FlexibleJs from '../lib/flexible'
+import '../lib/reset.css'
+import '../lib/bootstrap.css'
+
 
 Vue.use(VueRouter)
 Vue.use(VueResource)

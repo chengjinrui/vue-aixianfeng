@@ -1,6 +1,6 @@
 <template>
     <div id="market_showGood">
-        <figure v-for="item in goodsArr">
+        <figure v-for="(item, index) in goodsArr">
             <a href=""><img :src="item.img" alt=""></a>
             <figcaption>
                 <section class="itemName_part">{{ item.name }}</section>
@@ -14,9 +14,9 @@
                     <span>￥{{ item.partner_price }}</span><s>￥{{ item.market_price }}</s>
                 </section>
                 <div class="jiaOrjian">
-                    <b class="myJian"><img src="../../static/images/home/myJian.png" alt=""></b>
+                    <b class="myJian" v-if="item.flag_shouldShow"><img src="../../static/images/home/myJian.png" alt=""></b>
                     <span class="itemCount_part"></span>
-                    <b class="myAdd"><img src="../../static/images/home/myadd.png" alt=""></b>
+                    <b class="myAdd" @click="changeFlagShouldShow(item, index)"><img src="../../static/images/home/myadd.png" alt=""></b>
                 </div>
             </figcaption>
         </figure>
@@ -44,7 +44,30 @@
 
 <script>
     export default{
-        props: ['goodsArr']
+        props: ['goodsArr'],
+        data(){
+            return {
+
+            }
+        },
+        methods:{
+            changeFlagShouldShow(item, index){
+                // console.log(index);
+                // 传进来index 根据index 把和父组件共有的goodsArr里面对应的flag_shouldShow值改掉 再返回该数组
+                var self = this;
+                self.goodsArr = self.goodsArr.map(function(tempObj){
+                    self.goodsArr[index].flag_shouldShow = true;
+                    return tempObj;
+                })
+                console.log(this.goodsArr);
+            }
+        },
+        created(){
+
+        },
+        mounted(){
+
+        }
     }
 </script>
 
