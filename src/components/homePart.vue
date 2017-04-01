@@ -1,57 +1,28 @@
 <template>
     <div id="homePart">
         <div class="top_part">
-            <p class="top_left_part"><span></span><span>优选水果</span></p>
+            <p class="top_left_part"><span></span><span>{{ partArr.category_detail.name }}</span></p>
             <p class="top_right_part">更多</p>
         </div>
         <div class="center_banner_part">
-            <img src="../../static/images/home/13.jpg" alt="">
+            <img :src="partArr.activity.topimg" alt="">
         </div>
         <div class="bottom_content_part">
-            <figure v-for="item in partArr">
+            <figure v-for="item in partArr.category_detail.goods">
                 <a href=""><img :src="item.img" alt=""></a>
                 <figcaption>
                     <section class="itemName_part">{{ item.name }}</section>
                     <section class="itemDesc_part">
+                        <span>精选</span>
                         <span>{{ item.pm_desc }}</span>
-                        <!-- <span>{{ item.pm_desc }}</span> -->
                     </section>
-                    <section class="itemSpecifics_part">{{ item.specifics }}/盒</section>
+                    <section class="itemSpecifics_part">{{ item.specifics }}</section>
                     <section class="itemPrice_part">
                         <span>￥{{ item.price }}</span><s>￥{{ item.market_price }}</s>
                     </section>
                     <b class="myAdd"><img src="../../static/images/home/myadd.png" alt=""></b>
                 </figcaption>
             </figure>
-            <!-- <figure>
-                <a href=""><img src="../../static/images/home/14.jpg" alt=""></a>
-                <figcaption>
-                    <section class="itemName_part">爱鲜蜂·海南千玺好吃桃子</section>
-                    <section class="itemDesc_part">
-                        <span>精选</span><span>限时特惠</span>
-                    </section>
-                    <section class="itemSpecifics_part">400-450g/盒</section>
-                    <section class="itemPrice_part">
-                        <span>￥9.9</span><s>￥13.8</s>
-                    </section>
-                    <b class="myAdd"><img src="../../static/images/home/myadd.png" alt=""></b>
-                </figcaption>
-            </figure>
-            <figure>
-                <a href=""><img src="../../static/images/home/14.jpg" alt=""></a>
-                <figcaption>
-                    <section class="itemName_part">爱鲜蜂·海南千玺好吃桃子</section>
-                    <section class="itemDesc_part">
-                        <span>精选</span>
-                        <span>限时特惠</span>
-                    </section>
-                    <section class="itemSpecifics_part">400-450g/盒</section>
-                    <section class="itemPrice_part">
-                        <span>￥9.9</span><s>￥13.8</s>
-                    </section>
-                    <p class="myAdd"><img src="../../static/images/home/myadd.png" alt=""></p>
-                </figcaption>
-            </figure> -->
         </div>
     </div>
 </template>
@@ -143,23 +114,27 @@
                 }
                 .itemDesc_part{
                     span{
-                        padding:0 .13rem;
+                        width: .26rem;
+                        /*padding:0 .13rem;*/
                         margin: 0 .13rem 0 0;
                         &:nth-of-type(1){
                             color:red;
                             border: 1px solid red;
                             border-radius: .13rem;
+                            padding:0 .13rem;
                         }
                         &:nth-of-type(2){
                             color:#fff;
                             background-color: red;
-                            border: 1px solid red;
+                            /*border: 1px solid red;*/
                             border-radius: .13rem;
                         }
                     }
                 }
                 .itemSpecifics_part{
+                    margin-left: .13rem;
                     color:#999999;
+                    font-size: .33rem;
                 }
                 .itemPrice_part{
                     span{

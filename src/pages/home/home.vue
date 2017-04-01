@@ -24,9 +24,10 @@
             <a href=""><img src="../../../static/images/home/11.jpg" alt=""></a>
             <a href=""><img src="../../../static/images/home/12.jpg" alt=""></a>
         </div>
-        <HomePart :partArr="fruitPartArr"></HomePart>
-        <HomePart :partArr="fruitPartArr"></HomePart>
-        <HomePart :partArr="fruitPartArr"></HomePart>
+
+        <div id="allParts">
+            <HomePart  v-for="item in allPartsArr" :partArr="item"></HomePart>
+        </div>
     </div>
 </template>
 
@@ -46,8 +47,10 @@ export default{
         return {
             firstNavArr: [],
             secondNavArr: [],
-            fruitPartArr: [],
-            category: '优选水果'
+            allPartsArr: [],
+            // fruitPartArr: [],
+            // category: '优选水果'
+
         }
     },
     methods: {
@@ -58,9 +61,9 @@ export default{
             })
         },
         loadPartData(){
-            this.$http.get('http://www.vrserver.applinzi.com/aixianfeng/apicategory.php?category=' + this.category).then((res) => {
-                this.fruitPartArr = res.body.data.slice(1,4);
-                // console.log(res.body.data);
+            this.$http.get('/static/data/home.json').then((res) => {
+                console.log(res.body.data.act_info[5].act_rows);
+                this.allPartsArr = res.body.data.act_info[5].act_rows;
             })
         }
     },
