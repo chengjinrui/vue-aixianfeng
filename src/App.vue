@@ -88,6 +88,7 @@ export default {
 @import url('../lib/reset.css');
 @import url('../lib/swiper-3.3.1.min.css');
 #app {
+    font-family: '微软雅黑';
     #footer{
         height: 1.56rem;
         display: flex;

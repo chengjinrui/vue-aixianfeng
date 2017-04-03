@@ -14,8 +14,8 @@
                     <span>￥{{ item.partner_price }}</span><s>￥{{ item.market_price }}</s>
                 </section>
                 <div class="jiaOrjian">
-                    <b class="myJian" v-if="item.flag_shouldShow"><img src="../../static/images/home/myJian.png" alt=""></b>
-                    <span class="itemCount_part"></span>
+                    <b class="myJian" v-if="item.flag_shouldShow" @click="countMinus(index)"><img src="../../static/images/home/myJian.png" alt=""></b>
+                    <span class="itemCount_part" v-if="item.flag_shouldShow">{{ item.origin_count }}</span>
                     <b class="myAdd" @click="changeFlagShouldShow(item, index)"><img src="../../static/images/home/myadd.png" alt=""></b>
                 </div>
             </figcaption>
@@ -44,26 +44,52 @@
 
 <script>
     export default{
-        props: ['goodsArr'],
+        props: ['goodsArr', 'idForGoodsArr'],
         data(){
             return {
 
             }
         },
         methods:{
+            // // // // // 原先的写法 这里我要改进让vue不给我警告 直接改变全局变量的值 而不是通过改变子组件的值影响到父组件的值
+            // // //                    详情见record >8.
+            // // //
+            // changeFlagShouldShow(item, index){
+            //     // console.log(index);
+            //     // 传进来index 根据index 把和父组件共有的goodsArr里面对应的flag_shouldShow值改掉 再返回该数组
+            //     var self = this;
+            //     this.goodsArr = this.goodsArr.map(function(tempObj){
+            //         self.goodsArr[index].flag_shouldShow = true;
+            //         return tempObj;
+            //     })
+            //     console.log(this.goodsArr);
+            // }
+
+
+            // 改进的写法
+            //                   详情见record >8.改进方案
             changeFlagShouldShow(item, index){
-                // console.log(index);
-                // 传进来index 根据index 把和父组件共有的goodsArr里面对应的flag_shouldShow值改掉 再返回该数组
-                var self = this;
-                self.goodsArr = self.goodsArr.map(function(tempObj){
-                    self.goodsArr[index].flag_shouldShow = true;
-                    return tempObj;
-                })
-                console.log(this.goodsArr);
+                // 我传过来了 当前某一个商品所在数组的id以及当前某一个商品的下标 直接操纵 真tm简单
+                this.$root.allGoodsObj[this.idForGoodsArr][index].flag_shouldShow = true;
+                this.countAdd(index);
+            },
+            countAdd(index){
+                this.$root.allGoodsObj[this.idForGoodsArr][index].origin_count ++;
+            },
+            countMinus(index){
+                this.$root.allGoodsObj[this.idForGoodsArr][index].origin_count --;
+                if (this.$root.allGoodsObj[this.idForGoodsArr][index].origin_count == 0) {
+                    this.$root.allGoodsObj[this.idForGoodsArr][index].flag_shouldShow = false;
+                }
+
             }
         },
         created(){
-
+            // // 测试 是否能修改全局变量 a 证明是可以的
+            // this.$root.a = 10;
+            // // 测试 是否能访问到全局变量 a
+            // console.log(this.$root.a);
+            console.log(this.$root.allGoodsObj);
         },
         mounted(){
 
@@ -165,6 +191,11 @@
                     vertical-align: middle;
                     margin-bottom: .07rem;
                 }
+            }
+            .itemCount_part{
+                position: absolute;
+                right: 1.2rem;
+                bottom: .47rem;
             }
         }
     }

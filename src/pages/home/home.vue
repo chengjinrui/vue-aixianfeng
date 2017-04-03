@@ -62,7 +62,7 @@ export default{
         },
         loadPartData(){
             this.$http.get('/static/data/home.json').then((res) => {
-                console.log(res.body.data.act_info[5].act_rows);
+                // console.log(res.body.data.act_info[5].act_rows);
                 this.allPartsArr = res.body.data.act_info[5].act_rows;
             })
         }

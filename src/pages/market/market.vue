@@ -22,7 +22,7 @@
                     </section>
                 </div>
                 <div class="rightBottom">
-                    <Market_showGood :goodsArr="currentGoodsArr"></Market_showGood>
+                    <Market_showGood :goodsArr="currentGoodsArr" :idForGoodsArr="currentIdForGoodsArr"></Market_showGood>
                 </div>
             </div>
         </div>
@@ -41,7 +41,8 @@ import Market_showGood from '../../components/market_showGood'
             return{
                 categoriesArr : [],
                 allGoodsArr : [],
-                currentGoodsArr : [],
+                currentIdForGoodsArr : 104749,
+                currentGoodsArr : this.$root.allGoodsObj[104749]
             }
         },
         methods: {
@@ -57,18 +58,57 @@ import Market_showGood from '../../components/market_showGood'
                         return item;
                     })
                 });
-                // 请求market.json中的数据 得到的是所有的goods数据
+
+                // // // // 原先的写法
+                // //                    详情见record >8.
+                // //
+                // // 请求market.json中的数据 得到的是所有的goods数据
+                // this.$http.get('/static/data/market.json').then((res)=>{
+                //     // console.log(res.body);
+                //     this.allGoodsArr = res.body.products;
+                //
+                //     // 在这里初始化一下currentGoodsArr的值 默认是热销榜 104749是热销榜的id
+                //     let currentGoodsArr = this.allGoodsArr[104749];
+                //     this.currentGoodsArr = currentGoodsArr.map(function(item){
+                //         item.flag_shouldShow = false;
+                //         return item;
+                //     })
+                // })
+            },
+            // 改进的写法  我把请求商品的部分从上面移动出来 封装为另一个方法 功能分离要不太乱
+            //                     详情见详情见record >8.
+            loadAllGoodsData(){
+                // 判断全局变量里面的allGoodsObj是不是空
+                if (this.$root.allGoodsObj.isEmpt) {
+                // 请求market.json中的数据 得到的是所有的goods数据 然后赋值给全局变量
                 this.$http.get('/static/data/market.json').then((res)=>{
                     // console.log(res.body);
-                    this.allGoodsArr = res.body.products;
+                    // this.$root.allGoodsArr = res.body.products;
 
-                    // 在这里初始化一下currentGoodsArr的值 默认是热销榜 104749是热销榜的id
-                    let currentGoodsArr = this.allGoodsArr[104749];
-                    this.currentGoodsArr = currentGoodsArr.map(function(item){
-                        item.flag_shouldShow = false;
-                        return item;
-                    })
+                    let allGoodsObj = res.body.products;
+                    // console.log(allGoodsObj);
+                    for(var i in allGoodsObj){
+                        // console.log(i);
+                        // console.log(allGoodsObj[i]);
+                        allGoodsObj[i].map(function(item){
+                            // console.log(item);
+                            item.flag_shouldShow = false;
+                            item.origin_count = 0;
+                            return item;
+                        })
+                    }
+                    // console.log(allGoodsObj);
+                    this.$root.allGoodsObj = allGoodsObj;
+                    // console.log(this.$root.allGoodsObj);
+
+                    // 改进 把这里的初始化 放到上面 data(){} 里面
+                    // // 在这里初始化一下currentGoodsArr的值 默认是热销榜 104749是热销榜的id
+                    this.currentIdForGoodsArr = 104749;
+                    this.currentGoodsArr = this.$root.allGoodsObj[this.currentIdForGoodsArr];
+
+                    this.$root.allGoodsObj.isEmpt = false;
                 })
+                }
             },
             changeFlagSelected(item){
                 this.categoriesArr.forEach(function(tempObj){
@@ -76,17 +116,29 @@ import Market_showGood from '../../components/market_showGood'
                 })
                 item.flag_selected = !item.flag_selected;
                 // console.log(item.id);
+
+                // // 原先的写法
+                //                    详情见record >8.
                 //
-                let currentGoodsArr = this.allGoodsArr[item.id];
-                this.currentGoodsArr = currentGoodsArr.map(function(item){
-                    item.flag_shouldShow = false;
-                    return item;
-                })
+                // //每次点击某个category的时候  把该id 传过来 然后给currentGoodsArr赋值
+                // let currentGoodsArr = this.allGoodsArr[item.id];
+                // this.currentGoodsArr = currentGoodsArr.map(function(item){
+                //     item.flag_shouldShow = false;
+                //     return item;
+                // })
+                // // console.log(this.currentGoodsArr);
+
+                // 改进的写法
+                //                   详情见record >8.改进方案
+                //每次点击某个category的时候  把该id 传过来 然后给currentGoodsArr赋值
+                this.currentIdForGoodsArr = item.id;
+                this.currentGoodsArr = this.$root.allGoodsObj[this.currentIdForGoodsArr];
                 // console.log(this.currentGoodsArr);
             }
         },
         created(){
             this.loadData();
+            this.loadAllGoodsData();
         }
     }
 </script>

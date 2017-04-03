@@ -36,5 +36,11 @@ new Vue({
   el: '#app',
   template: '<App/>',
   components: { App },
-  router
+  router,
+  data: {
+      a: 1,
+      allGoodsObj: {
+          isEmpt: true
+      }
+  }
 })
