@@ -52,23 +52,23 @@
                 </div>
             </section>
         </div>
-        <div class="car_content" v-for="item in currentCarsArr">
-            <input type="checkbox" name="" value="">
+        <div class="car_content" v-for="(item, index) in currentCarsArr" v-if="item.flag_shouldShow">
+            <input type="checkbox" name="" :value="(item.partner_price*item.origin_count).toFixed(2)" checked='item.isSelected' @click="abc(item)" ref="oInput">
             <figure>
                 <p><img :src="item.img" alt=""></p>
                 <figcaption>
                     <p>{{ item.name }}</p>
                     <p>￥{{ item.partner_price }}</p>
-                    <b class="myJian"><img src="../../../static/images/home/myJian.png" alt=""></b>
+                    <b class="myJian" @click=countMinus(item)><img src="../../../static/images/home/myJian.png" alt=""></b>
                     <span class="itemCount_part" >{{ item.origin_count }}</span>
-                    <b class="myAdd"><img src="../../../static/images/home/myadd.png" alt=""></b>
+                    <b class="myAdd" @click="countAdd(item)"><img src="../../../static/images/home/myadd.png" alt=""></b>
                 </figcaption>
             </figure>
         </div>
         <div class="car_shopResult">
             <div class="selectAll">
                 <div class="left_selectAll">
-                    <input type="checkbox" name="" value="">
+                    <input type="checkbox" name="" value="" checked="true">
                     <span>全选</span>
                 </div>
                 <b>共: <i>￥{{ totalPrice }}</i></b>
@@ -89,33 +89,71 @@
         },
         methods:{
             loadData(){
-                console.log(this.$root.allGoodsObj);
+                // console.log(this.$root.allGoodsObj);
                 var self = this;
                 for(let i in self.$root.allGoodsObj){
                     if (i != 'isEmpt') {
                         // console.log(self.$root.allGoodsObj[i]);
-                        self.$root.allGoodsObj[i].forEach((item)=>{
-                            console.log(item.origin_count);
+                        self.$root.allGoodsObj[i].map((item)=>{
+                            // console.log(item.origin_count);
+                            // console.log(item.brand_id);
                             if (item.origin_count > 0) {
-                                console.log(item);
+                                // console.log(item);
+                                item.isSelected = true;
                                 self.currentCarsArr.push(item);
                             }
                         })
                     }
                 }
-                console.log(this.currentCarsArr);
+                // console.log(this.currentCarsArr);
+            },
+            countAdd(item){
+                item.origin_count ++;
+                // 购物车旁边的数字要同步进行修改
+                this.$root.numberBesideCar ++;
+            },
+            countMinus(item){
+                item.origin_count --;
+                // 购物车旁边的数字要同步进行修改
+                this.$root.numberBesideCar --;
+                if (item.origin_count == 0) {
+                    item.flag_shouldShow = false;
+                }
+            },
+            abc(item){
+            //
+            //     this.totalPrice = 0;
+            //     console.log(this.totalPrice);
+                item.isSelected = !item.isSelected;
+            //     // // console.log(this.$refs.oInput);
+            //     // this.$refs.oInput.forEach((item)=>{
+            //     //     console.log(item);
+            //     //     this.sum += Number(item.value);
+            //     //     console.log(this.sum);
+            //     // })
             }
         },
         computed: {
             totalPrice(){
+                this.sum = 0;
                 this.currentCarsArr.forEach((item)=>{
                     this.sum += item.origin_count * item.partner_price;
                 })
-                return this.sum;
-            }
-        },
-        create(){
+                // console.log(this.$refs.oInput);
 
+                // try{
+                //     for(var i in this.$refs.oInput){
+                //         if (this.$refs.oInput[i].isSelected) {
+                //             console.log(123);
+                //         }else{
+                //             this.sum - Number($refs.oInput[i].value);
+                //         }
+                //     }
+                // }catch(err){
+                //     console.log(err);
+                // }
+                return this.sum.toFixed(2);
+            }
         },
         mounted(){
             this.loadData();

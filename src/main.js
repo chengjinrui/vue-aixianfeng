@@ -41,6 +41,10 @@ new Vue({
       a: 1,
       allGoodsObj: {
           isEmpt: true
-      }
+      },
+      allCarGoodsObj: {
+
+      },
+      numberBesideCar: 0
   }
 })

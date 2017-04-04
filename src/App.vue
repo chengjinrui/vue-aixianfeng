@@ -21,6 +21,7 @@
                     <!-- <span><img src="../static/images/footer/car0.png" alt=""></span> -->
                     <span><img :src="'../static/images/footer/car'+index_car+'.png'" alt=""></span>
                     <span>购物车</span>
+                    <i class="numberBesideCar">{{ $root.numberBesideCar }}</i>
                 </router-link>
             </section>
             <section>
@@ -66,7 +67,7 @@ export default {
     watch: {
         'currentUrl':{
             handler(newValue, oldValue){
-                // console.log(newValue)
+                // console.log(newValue,oldValue)
                 var reg_home =  new RegExp('home');
                 var reg_market = new RegExp('market');
                 var reg_car = new RegExp('car');
@@ -74,6 +75,7 @@ export default {
                 // console.log(reg_home.test(newValue));
                 reg_home.test(newValue)?this.index_home='1':this.index_home='0';
                 reg_market.test(newValue)?this.index_market='1':this.index_market='0';
+                // console.log(reg_car.test(newValue));
                 reg_car.test(newValue)?this.index_car='1':this.index_car='0';
                 reg_mine.test(newValue)?this.index_mine='1':this.index_mine='0';
                 // console.log(this.index_home);
@@ -110,6 +112,22 @@ export default {
                 img{
                     width: .67rem;
                     height: .67rem;
+                }
+            }
+            &:nth-of-type(3){
+                position: relative;
+                .numberBesideCar{
+                    font-style: normal;
+                    color: #fff;
+                    position: absolute;
+                    right: -.53rem;
+                    top: 0;
+                    width: .53rem;
+                    text-align: center;
+                    height: .53rem;
+                    line-height: .53rem;
+                    border-radius: 50%;
+                    background-color:red;
                 }
             }
         }

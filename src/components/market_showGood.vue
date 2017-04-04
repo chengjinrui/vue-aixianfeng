@@ -71,13 +71,17 @@
             changeFlagShouldShow(item, index){
                 // 我传过来了 当前某一个商品所在数组的id以及当前某一个商品的下标 直接操纵 真tm简单
                 this.$root.allGoodsObj[this.idForGoodsArr][index].flag_shouldShow = true;
-                this.countAdd(index);
+                this.countAdd(item, index);
             },
-            countAdd(index){
+            countAdd(item, index){
                 this.$root.allGoodsObj[this.idForGoodsArr][index].origin_count ++;
+                // 购物车旁边的数字要同步进行修改
+                this.$root.numberBesideCar ++;
             },
             countMinus(index){
                 this.$root.allGoodsObj[this.idForGoodsArr][index].origin_count --;
+                // 购物车旁边的数字要同步进行修改
+                this.$root.numberBesideCar --;
                 if (this.$root.allGoodsObj[this.idForGoodsArr][index].origin_count == 0) {
                     this.$root.allGoodsObj[this.idForGoodsArr][index].flag_shouldShow = false;
                 }

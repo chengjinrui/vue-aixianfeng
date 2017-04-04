@@ -59,7 +59,7 @@
             }
         },
         created(){
-            console.log(this.$root.a);
+            // console.log(this.$root.a);
         }
     }
 </script>
