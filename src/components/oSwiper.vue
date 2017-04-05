@@ -24,8 +24,9 @@ import Swiper from '../../lib/swiper'
         },
         methods:{
             loadData(){
-                this.$http.get('http://www.vrserver.applinzi.com/aixianfeng/apihome.php').then((res)=>{
-                    this.imgArr = res.body.data.slide;
+                this.$http.get('/static/data/home.json').then((res)=>{
+                    // console.log(res.body.data.act_info[0].act_rows);
+                    this.imgArr = res.body.data.act_info[0].act_rows;
                 })
             },
             loadSwiper(){
@@ -62,9 +63,11 @@ import Swiper from '../../lib/swiper'
 #oSwiper{
     border-bottom: .32rem solid #efefef;
     .swiper-container{
-        height: 3.72rem;
         .swiper-slide img {
             width: 100%;
+        }
+        .swiper-pagination{
+            margin-left: 3.07rem;
         }
     }
 }

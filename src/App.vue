@@ -19,7 +19,7 @@
             <section>
                 <router-link to='/car'>
                     <!-- <span><img src="../static/images/footer/car0.png" alt=""></span> -->
-                    <span><img :src="'../static/images/footer/car'+index_car+'.png'" alt=""></span>
+                    <span id="icon-cart"><img :src="'../static/images/footer/car'+index_car+'.png'" alt=""></span>
                     <span>购物车</span>
                     <i class="numberBesideCar">{{ $root.numberBesideCar }}</i>
                 </router-link>
@@ -61,7 +61,7 @@ export default {
     updated(){
         // console.log(this.$router.currentRoute.path),
         // this.judge();
-        this.currentUrl = this.$router.currentRoute.path
+        this.currentUrl = this.$router.currentRoute.path;
         // console.log(this.currentUrl);
     },
     watch: {
@@ -100,7 +100,7 @@ export default {
         left: 0;
         right: 0;
         bottom: 0;
-        z-index: 999;
+        z-index: 9;
         background-color: #f3f6f7;
         section{
             a{

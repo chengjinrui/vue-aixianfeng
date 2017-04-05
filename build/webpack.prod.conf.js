@@ -25,6 +25,15 @@ var webpackConfig = merge(baseWebpackConfig, {
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
   plugins: [
+
+//
+// 这部分是我引入jquery加入的
+    new webpack.ProviderPlugin({
+        $: 'jquery',
+        jQuery: 'jquery',
+    })
+//
+
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env

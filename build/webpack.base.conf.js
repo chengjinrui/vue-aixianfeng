@@ -22,7 +22,9 @@ module.exports = {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src')
+      '@': resolve('src'),
+    //   下面这些是我加入jquery的时候写的
+      'jquery': path.resolve(__dirname, '../node_modules/jquery/src/jquery'),
     }
   },
   module: {

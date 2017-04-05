@@ -19,7 +19,7 @@
                 <a href=""><img src="../../../static/images/home/10.jpg" alt=""></a>
             </div>
         </div>
-        <CommonNav :navArr="secondNavArr"></CommonNav>
+        <SecondNav :navArr="secondNavArr"></SecondNav>
         <div class="someTitle">
             <a href=""><img src="../../../static/images/home/11.jpg" alt=""></a>
             <a href=""><img src="../../../static/images/home/12.jpg" alt=""></a>
@@ -35,12 +35,14 @@
 import CommonHeader from '../../components/commonHeader';
 import OSwiper from '../../components/oSwiper';
 import CommonNav from '../../components/commonNav';
+import SecondNav from '../../components/secondNav';
 import HomePart from '../../components/homePart'
 export default{
     components: {
         CommonHeader,
         OSwiper,
         CommonNav,
+        SecondNav,
         HomePart
     },
     data(){
@@ -55,14 +57,15 @@ export default{
     },
     methods: {
         loadData(){
-            this.$http.get('http://www.vrserver.applinzi.com/aixianfeng/apihome.php').then((res) => {
-                this.firstNavArr = res.body.data.menu.slice(0, 4);
-                this.secondNavArr = res.body.data.menu.slice(4, 8);
+            this.$http.get('/static/data/home.json').then((res) => {
+                // console.log(res.body.data.act_info[4].act_rows[2].act_rows);
+                this.firstNavArr = res.body.data.act_info[1].act_rows;
+                this.secondNavArr = res.body.data.act_info[4].act_rows[2].act_rows;
             })
         },
         loadPartData(){
             this.$http.get('/static/data/home.json').then((res) => {
-                // console.log(res.body.data.act_info[5].act_rows);
+                console.log(res.body.data.act_info[5].act_rows);
                 this.allPartsArr = res.body.data.act_info[5].act_rows;
             })
         }

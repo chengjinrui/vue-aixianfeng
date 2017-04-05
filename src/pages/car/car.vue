@@ -68,7 +68,7 @@
         <div class="car_shopResult">
             <div class="selectAll">
                 <div class="left_selectAll">
-                    <input type="checkbox" name="" value="" checked="true">
+                    <input type="checkbox" name="" value="" checked="true" @click="selectAll($event)">
                     <span>全选</span>
                 </div>
                 <b>共: <i>￥{{ totalPrice }}</i></b>
@@ -131,6 +131,14 @@
             //     //     this.sum += Number(item.value);
             //     //     console.log(this.sum);
             //     // })
+            },
+            selectAll($event){
+                // let car = $event.path[5].children[1];
+                //
+                // console.log(car);
+                // console.log($('.car_content').children(0));
+                console.log(123);
+                // $('.car_content').attr('checked', 'true')
             }
         },
         computed: {
@@ -288,12 +296,13 @@
                 p{
                     margin: .13rem 0;
                     padding-top: .27rem;
-                    font-size: .44rem;
+                    font-size: .40rem;
                     &:nth-of-type(1){
+                        display: block;
                         color: #000;
-                        width: 2.67rem;
-                        text-overflow: ellipsis;
+                        width: 2.77rem;
                         overflow: hidden;
+                        text-overflow:ellipsis;
                         white-space: nowrap;
                     }
                 }

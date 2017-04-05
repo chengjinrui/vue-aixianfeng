@@ -73,3 +73,47 @@ __尝试决定成败__
 本来就是单纯的想试试是否能够通过currentCarsArr的改变看看页面的变化 抱着肯定不会成功的心态 但是成功了 因为数组是引用 understand? 购物车就这么实现了..  还有就是购物车的数量为零的时候 给父元素加个v-if就ok了
 
 -4.购物车还没有完结 那个复选框没搞出来 购物车右上角的数字弄好了
+
+>10.购物车动画   
+
+-1.加入jquery jquery.fly.js 其中加入jquery的方法和jquery.fly的相关方法放笔记里面了 然后在搞动画的时候把$event 传参进去 找到对应的图片的src 复制一个图片出来 用来做动画 动画完成之后要进行销毁<br>
+```
+let img = $($event.path[4].children[0].children[0]).attr('src'); //获得src的内容 下面要创建一个新的用来实现动画效果
+let offsetOfCar = $("#icon-cart").offset();  //因为是点击添加按钮触发的 要的不是按钮的位置 是图片所在的位置和购物车所在的位置
+let offsetOfImg = $($event.path[4].children[0].children[0]).offset();//这个是图片所在的位置
+let flyer = $('<img class="flyer-img" src="' + img + '">'); //抛物体对象 即创建的新的图片对象用来实现动画效果
+//我给初始的刚创建的图片对象一个css样式 让图片显得不是太大
+flyer.css({
+    width: '20%',
+    height: '10%',
+    borderRadius: '50%'
+})
+//然后就是实现动画效果的代码了 简单易懂 最后要销毁这个对象 destroy
+flyer.fly({
+    start: {
+        top: offsetOfImg.top,
+        left: offsetOfImg.left,
+    },
+    end: {
+        top: offsetOfCar.top,
+        left: offsetOfCar.left,
+        width: 20,
+        height: 20
+    },
+    onEnd: function() {
+        // console.log('END');
+        this.destroy();
+    }
+});
+// console.log($event);
+```
+
+
+-2.之前没解决的问题  行内样式表字符串的拼接<br>
+
+```
+<span :style="'background-color:#' + partArr.category_detail.category_color"></span>
+```
+-3.实现懒加载 用的是jquery.lazyload插件 容器内的图片懒加载要给容器高和overflow 不然会报错
+在mouted的时候加载一次 然后在updated的时候再进行加载 这样每次goodsArr变化的时候都会进行懒加载 所以我每次点击加入购物车的时候页面都要闪一下 是因为页面生成了我新创建的图片;解决思路是 不用updated了 改用watch mounted进行一次以后 就用watch监听 然后做出改变<br>
+-4.懒加载遗留问题 F5刷新之后 页面显示空白 别的都没问题

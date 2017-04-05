@@ -7,6 +7,13 @@ import LessLoader from 'less-loader'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 import FlexibleJs from '../lib/flexible'
+// 引入jquery
+import $ from 'jquery'
+// 一个动画插件 实现加入购物车效果
+import '../lib/jquery.fly'
+// 引入懒加载插件
+import '../lib/jquery.lazyload.min.js'
+
 import '../lib/reset.css'
 import '../lib/bootstrap.css'
 

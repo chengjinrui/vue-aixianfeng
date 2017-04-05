@@ -1,7 +1,10 @@
 <template>
     <div id="homePart">
         <div class="top_part">
-            <p class="top_left_part"><span></span><span>{{ partArr.category_detail.name }}</span></p>
+            <p class="top_left_part">
+                <span :style="'background-color:#' + partArr.category_detail.category_color"></span>
+                <!-- <b>{{ '#'+partArr.category_detail.category_color }}</b> -->
+                <span :style=" 'color:#' + partArr.category_detail.category_color ">{{ partArr.category_detail.name }}</span></p>
             <p class="top_right_part">更多</p>
         </div>
         <div class="center_banner_part">
@@ -83,13 +86,12 @@
         margin: 0 auto;
         height: 5.45rem;
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
         figure{
-            width:32%;
+            width:33%;
             display: flex;
             flex-direction: column;
             &:nth-of-type(2){
-                width: 36%;
                 border-left:1px solid #e0e0e0;
                 border-right:1px solid #e0e0e0;
             }
@@ -146,7 +148,8 @@
                 }
                 .myAdd{
                     position: absolute;
-                    right: .47rem; //35px;
+                    /*right: .47rem; //35px;*/
+                    right: .13rem;
                     bottom: 0;
                     border: 1px solid #e5e3e2;
                     border-radius: 100%;

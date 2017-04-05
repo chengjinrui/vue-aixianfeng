@@ -1,7 +1,7 @@
 <template>
     <div id="market_showGood">
         <figure v-for="(item, index) in goodsArr">
-            <a href=""><img :src="item.img" alt=""></a>
+            <a href="javascript:void(0);"><img class="lazy" :data-original="item.img" alt=""></a>
             <figcaption>
                 <section class="itemName_part">{{ item.name }}</section>
                 <section class="itemDesc_part">
@@ -16,7 +16,7 @@
                 <div class="jiaOrjian">
                     <b class="myJian" v-if="item.flag_shouldShow" @click="countMinus(index)"><img src="../../static/images/home/myJian.png" alt=""></b>
                     <span class="itemCount_part" v-if="item.flag_shouldShow">{{ item.origin_count }}</span>
-                    <b class="myAdd" @click="changeFlagShouldShow(item, index)"><img src="../../static/images/home/myadd.png" alt=""></b>
+                    <b class="myAdd" @click="changeFlagShouldShow(index, $event)"><img src="../../static/images/home/myadd.png" alt=""></b>
                 </div>
             </figcaption>
         </figure>
@@ -68,12 +68,42 @@
 
             // 改进的写法
             //                   详情见record >8.改进方案
-            changeFlagShouldShow(item, index){
+            changeFlagShouldShow(index, $event){
                 // 我传过来了 当前某一个商品所在数组的id以及当前某一个商品的下标 直接操纵 真tm简单
                 this.$root.allGoodsObj[this.idForGoodsArr][index].flag_shouldShow = true;
-                this.countAdd(item, index);
+                this.countAdd(index);
+
+                // 从传过来的$event中找到 点击的加号对应的图片元素节点
+                // console.log($event.path[4].children[0].children[0]);
+
+                let img = $($event.path[4].children[0].children[0]).attr('src');
+                let offsetOfCar = $("#icon-cart").offset();
+                let offsetOfImg = $($event.path[4].children[0]).offset();
+                let flyer = $('<img class="flyer-img" src="' + img + '">'); //抛物体对象
+                flyer.css({
+                    width: '20%',
+                    height: '10%',
+                    borderRadius: '50%'
+                })
+                flyer.fly({
+                    start: {
+                        top: offsetOfImg.top,
+                        left: offsetOfImg.left,
+                    },
+                    end: {
+                        top: offsetOfCar.top,
+                        left: offsetOfCar.left,
+                        width: 50,
+                        height: 50
+                    },
+                    onEnd: function() {
+                        // console.log('END');
+                        this.destroy();
+                    }
+                });
+                // console.log($event);
             },
-            countAdd(item, index){
+            countAdd(index){
                 this.$root.allGoodsObj[this.idForGoodsArr][index].origin_count ++;
                 // 购物车旁边的数字要同步进行修改
                 this.$root.numberBesideCar ++;
@@ -85,7 +115,6 @@
                 if (this.$root.allGoodsObj[this.idForGoodsArr][index].origin_count == 0) {
                     this.$root.allGoodsObj[this.idForGoodsArr][index].flag_shouldShow = false;
                 }
-
             }
         },
         created(){
@@ -96,16 +125,38 @@
             console.log(this.$root.allGoodsObj);
         },
         mounted(){
-
+            // 懒加载
+            $('img.lazy').lazyload({
+    			container: $("#market_showGood")
+    		})
+        },
+        updated(){
+            // $('img.lazy').lazyload({
+            //     // effect : 'fadeIn',
+            //     container: $("#market_showGood")
+            // })
+        },
+        watch:{
+            'goodsArr':{
+                handler(newVlaue, oldValue){
+                    // 懒加载
+                    $('img.lazy').lazyload({
+            			effect : 'fadeIn',
+            			container: $("#market_showGood")
+            		})
+                }
+            }
         }
     }
 </script>
 
 <style lang="less">
 #market_showGood{
+    height: 13.33rem;
+    overflow:scroll;
     figure{
         width:100%;
-        height: 2.81rem;
+        /*height: 2.81rem;*/
         border-bottom: 1px solid #e0e0e0;
         display: flex;
 
